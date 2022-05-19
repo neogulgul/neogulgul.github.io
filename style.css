@@ -1,0 +1,29 @@
+@font-face {
+	font-family: "Nintendo DS BIOS";
+	src: url(./Nintendo-DS-BIOS.ttf);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Nintendo DS BIOS";
+	font-size: 30px;
+	font-weight: normal;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+a {
+	padding: 10px 25px;
+	border-radius: 50px;
+	text-decoration: none;
+	text-transform: uppercase;
+	background-color: #000;
+	color: #fff;
+}

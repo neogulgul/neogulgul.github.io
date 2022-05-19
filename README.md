@@ -1,1 +1,0 @@
-# neogulgul.github.io

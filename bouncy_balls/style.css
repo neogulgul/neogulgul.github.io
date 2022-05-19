@@ -1,0 +1,551 @@
+@font-face {
+	font-family: "Enter Command";
+	src: url(./fonts/EnterCommand.ttf);
+}
+
+@font-face {
+	font-family: "Inter";
+	src: url(./fonts/Inter-Regular.ttf);
+}
+
+:root {
+	--background: #fff;
+	--background-transparent: rgba(0, 0, 0, 0.8);
+	--foreground: #000;
+	--border: 0.1vw solid #bdbdbd;
+	--transition: 0.3s;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	line-height: 100%;
+	text-transform: inherit;
+	color: inherit;
+	user-select: none;
+}
+
+html {
+	font-family: "Enter Command";
+	font-size: 30px;
+	font-weight: normal;
+	text-transform: uppercase;
+	color: var(--foreground);
+}
+
+body {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	overflow: hidden;
+	background-color: var(--background);
+	color: var(--foreground);
+}
+
+canvas {
+	border: 1px solid var(--foreground);
+}
+
+.game {
+	position: absolute;
+	max-width: 90vw;
+	max-height: 90vh;
+}
+
+.home:first-child {
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	cursor: pointer;
+}
+
+.game-ui {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	width: 200px;
+	padding: 15px;
+	opacity: 0.8;
+	background-color: var(--foreground);
+	color: var(--background);
+}
+
+.game-ui div {
+	display: flex;
+	justify-content: space-between;
+}
+
+#ui-next-wave {
+	display: none;
+	color: red;
+}
+
+/* main menu */
+
+#main-menu {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	height: 100%;
+}
+
+h1 {
+	text-align: center;
+	font-size: 3em;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-size: 1.2em;
+	text-align: center;
+}
+
+.player-image {
+	position: absolute;
+	width: 100px;
+	aspect-ratio: 1 / 1;
+	opacity: 0.5;
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.player-image:first-of-type {
+	left: -15px;
+	transform: rotate(15deg);
+}
+
+.player-image:last-of-type {
+	right: -15px;
+	transform: rotate(-15deg);
+}
+
+.player-image.active {
+	margin-bottom: 10px;
+	opacity: 1;
+}
+
+#buttons {
+	display: flex;
+	align-items: flex-end;
+	gap: 50px;
+}
+
+button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 200px;
+	height: 50px;
+	border: var(--border);
+	border-radius: 50px;
+	cursor: pointer;
+	transition: var(--transition);
+	background-color: var(--background);
+	color: var(--foreground);
+}
+
+button:hover {
+	border-color: var(--foreground);
+	background-color: var(--foreground);
+	color: var(--background);
+	fill: var(--background);
+}
+
+button.one-player {
+	position: relative;
+}
+
+button.one-player span {
+	position: absolute;
+	top: -1em;
+	white-space: nowrap;
+	pointer-events: none;
+	color: var(--foreground);
+}
+
+.map-selection {
+	position: absolute;
+	top: 0;
+	z-index: 100;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	gap: 25px;
+	width: 100vw;
+	height: 50vh;
+	padding: 25px;
+	overflow-y: scroll;
+	transition: var(--transition);
+	background-color: var(--background-transparent);
+	color: var(--background);
+}
+
+.map-selection h2 {
+	height: 5vh;
+	width: 100%;
+	text-align: center;
+}
+
+.map {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
+	border-radius: 15px;
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.map:hover canvas {
+	box-shadow: 0 0 10px 0 var(--background);
+}
+
+.map canvas {
+	width: 25vh;
+	height: 25vh;
+	background-color: var(--background);
+}
+
+.map-selection.one-player {
+	transform: translateY(-100%);
+}
+
+.map-selection.two-player {
+	transform: translateY(-100%);
+}
+
+.map-selection.active {
+	transform: translateY(0);
+}
+
+.btn {
+	position: absolute;
+	width: 1em;
+	height: 1em;
+	cursor: pointer;
+}
+
+.btn.active {
+	z-index: 15;
+	fill: var(--background);
+}
+
+.controls.btn {
+	top: 15px;
+	left: 15px;
+}
+
+.info.btn {
+	top: 15px;
+	right: 15px;
+}
+
+.edit.btn {
+	bottom: 15px;
+	right: 15px;
+}
+
+.menu {
+	position: absolute;
+	display: none;
+	width: 100vw;
+	height: 100vh;
+	font-family: "Inter";
+	font-size: 0.6em;
+	text-transform: none;
+	background-color: var(--background-transparent);
+	color: var(--background);
+}
+
+.menu.active {
+	z-index: 10;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 50px;
+}
+
+section h3 {
+	margin-bottom: 25px;
+}
+
+.info.menu section {
+	width: 500px;
+	text-align: justify;
+	line-height: 150%;
+}
+
+#font-credits span {
+	font-family: "Enter Command";
+	font-size: 30px;
+	text-transform: uppercase;
+}
+
+#font-credits a:hover {
+	opacity: 0.6;
+}
+
+.controls.menu section {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: 15px;
+}
+
+.controls.menu section h3 {
+	width: 100%;
+}
+
+.keys {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 5px;
+}
+
+.row {
+	display: flex;
+	justify-content: center;
+	gap: 5px;
+}
+
+.key {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	height: 50px;
+	border: var(--border);
+	border-radius: 5px;
+	text-transform: uppercase;
+}
+
+#space {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 150px;
+	height: 50px;
+	border: var(--border);
+	border-radius: 5px;
+	fill: var(--background);
+}
+
+#enter {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100px;
+	height: 60px;
+	border-top: var(--border);
+	border-right: var(--border);
+	fill: var(--background);
+	border-radius: 5px 5px 0 0;
+}
+
+#enter::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	width: 40%;
+	height: 100%;
+	border-top: var(--border);
+	border-bottom: var(--border);
+	border-left: var(--border);
+	border-radius: 5px 0 0 5px;
+}
+
+#enter::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	right: -1px;
+	width: calc(60% - 1px);
+	height: 125%;
+	border-bottom: var(--border);
+	border-left: var(--border);
+	border-right: var(--border);
+	border-radius: 0 0 5px 5px;
+}
+
+.end.menu {
+	justify-content: center;
+	align-items: center;
+	gap: 50px;
+}
+
+.end.menu h1 {
+	position: absolute;
+	top: 25%;
+}
+
+.end.menu button {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+.edit.menu {
+	gap: 0;
+}
+
+#tile-buttons {
+	position: absolute;
+	right: 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+	padding: 25px;
+	border-radius: 25px;
+	background-color: var(--background);
+}
+
+#tile-buttons button {
+	position: relative;
+	width: 50px;
+}
+
+#tile-buttons button:hover span {
+	display: inline;
+}
+
+#tile-buttons button span {
+	position: absolute;
+	left: 0;
+	transform: translateX(calc(-100% - 15px));
+	display: none;
+	padding: 5px 15px;
+	border-radius: 15px;
+	font-size: 0.8em;
+	background-color: var(--foreground);
+	color: var(--background);
+}
+
+#erase.active {
+	border-color: red;
+	background-color: red;
+	fill: var(--background);
+}
+
+#tile-grid .row {
+	gap: 0;
+}
+
+.tile {
+	max-width: 3vw;
+	min-width: 3vw;
+	max-height: 3vw;
+	min-height: 3vw;
+	border: 0.1vw solid rgba(0, 0, 0, 0.1);
+	background-color: var(--background);
+	cursor: pointer;
+}
+
+img.tile {
+	border: none;
+}
+
+#tile-selection {
+	position: absolute;
+	left: 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+	padding: 25px;
+	border-radius: 25px;
+	background-color: var(--background);
+}
+
+#tile-selection .tile {
+	opacity: 0.6;
+}
+
+#tile-selection .selected {
+	opacity: 1;
+}
+
+.tile.player {
+	border: 0.8vw solid #fff;
+}
+
+#notice {
+	position: absolute;
+	z-index: 100;
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	gap: 50px;
+	padding: 50px;
+	border-radius: 25px;
+	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+	font-family: "Inter";
+	font-size: 1em;
+	text-transform: none;
+	background-color: var(--background);
+	color: var(--foreground);
+}
+
+#notice div {
+	display: flex;
+	gap: 50px;
+}
+
+.choice:last-child {
+	display: none;
+}
+
+.animated {
+	position: absolute;
+	z-index: -100;
+}
+
+.animated:first-of-type {
+	bottom: 62.5px;
+	width: 25px;
+	animation: ball 5s infinite;
+}
+
+.animated:last-of-type {
+	bottom: 50px;
+	width: 50px;
+	transform: translateX(100%);
+	animation: player 5s infinite;
+}
+
+@keyframes ball {
+	from {
+		left: -50vw;
+		transform: translateX(-500%);
+	}
+
+	to {
+		left: 100%;
+		transform: translateX(500%);
+	}
+}
+
+@keyframes player {
+	from {
+		left: 0;
+		transform: translateX(-500%);
+	}
+
+	to {
+		left: 100%;
+		transform: translateX(500%);
+	}
+}
