@@ -927,6 +927,11 @@ document.body.onload = () => {
 	// music! :o
 	music.menu.play()
 
+	// dark mode
+	if (localStorage.getItem("mode") === "dark") {
+		darkMode()
+	}
+
 	// check for custom maps
 	if (localStorage.getItem("custom1") !== null) {
 		maps.onePlayer.custom1 = JSON.parse(localStorage.getItem("custom1"))
@@ -1296,4 +1301,34 @@ editMenu.onclick = (event) => {
 	}
 	editBtn.classList.remove("active")
 	editMenu.classList.remove("active")
+}
+
+// bomb
+function darkMode() {
+	document.documentElement.style.setProperty("--background", "#000")
+	document.documentElement.style.setProperty("--foreground", "#fff")
+	document.documentElement.style.setProperty("--border", "0.1vw solid rgba(255, 255, 255, 0.2)")
+	explosion.style.animation = "implode 3s"
+}
+
+const bomb = getElement("#bomb")
+const explosion = getElement("#explosion")
+
+bomb.onclick = () => {
+	explosion.style.display = "inline"
+}
+
+explosion.onanimationend = () => {
+	explosion.style.display = "none"
+	if (localStorage.getItem("mode") === null) {
+		darkMode()
+		getElement("#achievement").style.display = "flex"
+		localStorage.setItem("mode", "dark")
+	} else {
+		document.documentElement.style.setProperty("--background", "#fff")
+		document.documentElement.style.setProperty("--foreground", "#000")
+		document.documentElement.style.setProperty("--border", "0.1vw solid rgba(0, 0, 0, 0.2)")
+		explosion.style.animation = "explode 3s"
+		localStorage.removeItem("mode")
+	}
 }
