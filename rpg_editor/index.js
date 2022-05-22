@@ -54,18 +54,24 @@ function changeCanvasSize() {
 	getElement("#map canvas").width = width * 16
 	getElement("#map canvas").height = height * 16
 
+	console.log(`dW: ${deltaWidth}, dH: ${deltaHeight}`)
 	Object.keys(map.layers).forEach((layer) => {
 		// rows
 		for (let y = 0; y < Math.abs(deltaHeight); y++) {
 			if (deltaHeight > 0) {
 				map.layers[layer].push([])
+				if (deltaWidth === 0) {
+					let length = map.layers[layer].length
+					for (let x = 0; x < width; x++) {
+						map.layers[layer][length - 1].push("")
+					}
+				}
 			} else if (deltaHeight < 0) {
 				map.layers[layer].pop()
 			}
 		}
 
 		// columns
-		console.log(deltaWidth)
 		for (let y = 0; y < map.layers[layer].length; y++) {
 			let row = map.layers[layer][y]
 			for (let x = 0; x < Math.abs(deltaWidth); x++) {
@@ -110,7 +116,13 @@ function leftClick(event) {
 	if (event.button === 0) {
 		return true
 	}
+	return false
+}
 
+function middleClick(event) {
+	if (event.button === 1) {
+		return true
+	}
 	return false
 }
 
@@ -122,9 +134,21 @@ function tiling(event) {
 	if (editor.erase) {
 		map.layers[editor.layer][position.y][position.x] = ""
 	} else {
-		const tile = new Tile(editor.selection, editor.selector, position)
+		const tile = new Tile(editor.layer, editor.selector, position)
 		map.layers[editor.layer][position.y][position.x] = tile
 	}
+}
+
+function activateSelector() {
+	if (getElement(".selector.active") !== null) {
+		getElement(".selector.active").classList.remove("active")
+	}
+	getElement(`.layer.${editor.layer} .selector`).classList.add("active")
+
+	if (getElement("#layers .active") !== null) {
+		getElement("#layers .active").classList.remove("active")
+	}
+	getElement(`#layers .${editor.layer}`).classList.add("active")
 }
 
 // some variables
@@ -132,12 +156,11 @@ const canvas = getElement("#map canvas")
 const context = canvas.getContext("2d")
 
 const editor = {
-	selection: "tiles",
+	layer: "bottom",
 	selector: {
 		x: 0,
 		y: 0
 	},
-	layer: "middle",
 	drag: {
 		map: false,
 		grid: false
@@ -168,8 +191,8 @@ let translationY = 0
 let mapScale = 1
 
 class Tile {
-	constructor(selection, selector, position) {
-		this.selection = getElement("#tiles img")
+	constructor(layer, selector, position) {
+		this.layer = getElement(`img[src="./textures/${layer}.png"]`)
 		this.selector = {
 			x: selector.x * 16,
 			y: selector.y * 16
@@ -181,7 +204,7 @@ class Tile {
 	}
 
 	draw() {
-		context.drawImage(this.selection, this.selector.x, this.selector.y, 16, 16, this.position.x, this.position.y, 16, 16)
+		context.drawImage(this.layer, this.selector.x, this.selector.y, 16, 16, this.position.x, this.position.y, 16, 16)
 	}
 }
 
@@ -227,26 +250,45 @@ document.body.onload = () => {
 		changeCanvasSize()
 	}
 
-	getElement("#tiles img").onmousedown = (event) => {
-		if (!leftClick(event)) {
-			return
+	getAllElements(".layer img").forEach((img) => {
+		img.onmousedown = (event) => {
+			if (!leftClick(event)) {
+				return
+			}
+
+			editor.erase = false
+			getElement("#erase").classList.remove("active")
+
+			const src = img.getAttribute("src")
+			editor.layer = src.split("./textures/")[1].split(".png")[0]
+
+			const scale = getComputedStyle(document.documentElement).getPropertyValue("--pixel-scale")
+			editor.selector.x = getCoords(event, scale)[0]
+			editor.selector.y = getCoords(event, scale)[1]
+			getElement(`.layer.${editor.layer} .selector`).style.top = editor.selector.y * 16 * scale + "px"
+			getElement(`.layer.${editor.layer} .selector`).style.left = editor.selector.x * 16 * scale + "px"
+			activateSelector()
 		}
+	})
 
-		editor.erase = false
-		getElement("#erase").classList.remove("active")
-
-		const scale = getComputedStyle(document.documentElement).getPropertyValue("--pixel-scale")
-		const coordX = getCoords(event, scale)[0]
-		const coordY = getCoords(event, scale)[1]
-		editor.selection = "tiles"
-		editor.selector.x = coordX
-		editor.selector.y = coordY
-		getElement("#tiles .selector").style.top = coordY * 16 * scale + "px"
-		getElement("#tiles .selector").style.left = coordX * 16 * scale + "px"
-	}
+	getAllElements("#layers span").forEach((span) => {
+		span.onclick = () => {
+			if (!span.classList.contains("active")) {
+				editor.layer = span.classList.value
+				const scale = getComputedStyle(document.documentElement).getPropertyValue("--pixel-scale")
+				editor.selector.x = 0
+				editor.selector.y = 0
+				getElement(`.layer.${editor.layer} .selector`).style.top = editor.selector.y * 16 * scale + "px"
+				getElement(`.layer.${editor.layer} .selector`).style.left = editor.selector.x * 16 * scale + "px"
+				activateSelector()
+				getElement("#layers .active").classList.remove("active")
+				span.classList.add("active")
+			}
+		}
+	})
 
 	getElement("#map").onmousedown = (event) => {
-		if (getElement("#map canvas").contains(event.target) || !leftClick(event)) {
+		if (!middleClick(event)) {
 			return
 		}
 
@@ -305,6 +347,7 @@ document.body.onload = () => {
 	}
 
 	changeCanvasSize()
+	activateSelector()
 }
 
 document.onmousemove = (event) => {

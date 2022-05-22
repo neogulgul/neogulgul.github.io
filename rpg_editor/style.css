@@ -134,13 +134,14 @@ aside section input {
 	outline: none;
 }
 
-.selection {
+.layer {
 	position: relative;
 	display: flex;
 	width: calc(64px * var(--pixel-scale));
 }
 
-.selection .selector {
+.layer .selector {
+	display: none;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -150,7 +151,11 @@ aside section input {
 	pointer-events: none;
 }
 
-.selection img {
+.layer .selector.active {
+	display: flex;
+}
+
+.layer img {
 	width: 100%;
 	image-rendering: pixelated;
 }
@@ -197,6 +202,28 @@ aside section input {
 
 #erase.active {
 	fill: red !important;
+}
+
+#layers {
+	position: absolute;
+	top: 50%;
+	left: 305px;
+	transform: translateY(-50%);
+	display: flex;
+	flex-direction: column;
+}
+
+#layers span {
+	padding: 5px;
+	border: var(--border);
+	border-color: rgba(0, 0, 0, 0);
+	text-align: center;
+	cursor: pointer;
+}
+
+#layers span.active {
+	border-color: var(--blue);
+	color: var(--blue);
 }
 
 #export {
