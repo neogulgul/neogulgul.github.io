@@ -13,6 +13,7 @@
 }
 
 body {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -27,6 +28,7 @@ a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	gap: 5px;
 	width: 200px;
 	height: 50px;
 	border-radius: 25px;
@@ -37,8 +39,4 @@ a {
 
 a:hover {
 	box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5);
-}
-
-#test {
-	background-color: red;
 }
