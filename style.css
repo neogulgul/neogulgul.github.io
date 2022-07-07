@@ -28,8 +28,6 @@ svg {
 	fill: inherit;
 }
 
-body {}
-
 #site-wrapper {
 	position: relative;
 	display: flex;
@@ -37,6 +35,28 @@ body {}
 	min-height: 100vh;
 	overflow-x: hidden;
 	background-color: var(--background);
+}
+
+footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: auto;
+	height: 100px;
+	background-color: var(--background-alt);
+}
+
+footer a {
+	fill: var(--foreground);
+}
+
+footer a:hover {
+	opacity: 0.6;
+}
+
+footer a svg {
+	width: 2em;
+	height: 2em;
 }
 
 section {
