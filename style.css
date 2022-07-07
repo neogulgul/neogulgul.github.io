@@ -5,7 +5,7 @@
 
 :root {
 	--background    : #16161e;
-	--background-alt: #1a1b26;
+	--background-alt: #1a1b2699;
 	--foreground    : #ffffff;
 	--foreground-alt: #4d78cc;
 }
@@ -28,13 +28,51 @@ svg {
 	fill: inherit;
 }
 
+body {
+	background-color: var(--background);
+}
+
 #site-wrapper {
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
 	overflow-x: hidden;
-	background-color: var(--background);
+}
+
+#background-monke {
+	position: absolute;
+	z-index: -10;
+	width: 100vw;
+	height: 100vh;
+	object-fit: contain;
+	opacity: 0.1;
+}
+
+.banana {
+	position: absolute;
+	z-index: -10;
+	opacity: 0.1;
+}
+
+.banana:nth-child(1) {
+	top: 10px;
+	left: 10px;
+}
+
+.banana:nth-child(2) {
+	top: 10px;
+	right: 10px;
+}
+
+.banana:nth-child(3) {
+	bottom: 10px;
+	left: 10px;
+}
+
+.banana:nth-child(4) {
+	bottom: 10px;
+	right: 10px;
 }
 
 footer {
@@ -51,7 +89,7 @@ footer a {
 }
 
 footer a:hover {
-	opacity: 0.6;
+	fill: var(--foreground-alt);
 }
 
 footer a svg {
