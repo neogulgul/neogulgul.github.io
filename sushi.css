@@ -1,0 +1,112 @@
+@font-face {
+	font-family: "Dela Gothic One";
+	src: url("public/DelaGothicOne-Regular.ttf");
+}
+
+:root
+{
+	--border-color: #eeeeee;
+}
+
+*
+{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Dela Gothic One";
+}
+
+#app
+{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	max-width: 100vw;
+	min-height: 100vh;
+}
+
+main
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	flex-grow: 1;
+}
+
+.centered
+{
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+.centered
+{
+	position: relative;
+
+	gap: 20px;
+
+	color: white;
+	text-align: center;
+
+	background-color: #1d1c21;
+}
+
+.centered > *:not(img)
+{
+	z-index: 1;
+}
+
+.centered > img
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: min(50vw, 50vh);
+	opacity: 0.1;
+	border: 1px solid white;
+}
+
+.dish
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 400px;
+}
+
+.dish div
+{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.dish img
+{
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	object-position: center;
+}
+
+h1
+{
+	font-size: 50px;
+}
