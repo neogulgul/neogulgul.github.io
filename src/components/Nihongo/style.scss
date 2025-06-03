@@ -1,13 +1,104 @@
 .Nihongo
 {
-	width: 100%;
+    .phrases
+    {
+        display: flex;
+        flex-direction: column;
+        gap: inherit;
+        width: 100%;
 
-	.textFileWrapper
-	{
-		display: flex;
-		width: 100%;
-		padding: var(--spacing-m);
-		border: var(--border);
-		background-color: var(--background-dark);
-	}
+        .phrase
+        {
+            overflow: hidden;
+            border: var(--border);
+            border-radius: var(--border-radius);
+            background-color: var(--background-light);
+
+            .content
+            {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: var(--spacing-xl);
+
+                a
+                {
+                    position: absolute;
+                    top:  var(--spacing-l);
+                    left: var(--spacing-l);
+                    border: var(--border);
+                    border-radius: var(--border-radius);
+                    padding: var(--spacing-m);
+                    background-color: var(--background-light);
+
+                    &.anchored
+                    {
+                        background-color: var(--background-dark);
+                    }
+                }
+            }
+
+            .japanese
+            {
+                position: relative;
+                font-size: 2rem;
+                color: var(--blue);
+
+                .furigana
+                {
+                    position: absolute;
+                    top:  50%;
+                    left: 50%;
+                    translate: -50% calc(-100% - var(--spacing-m));
+                    color: var(--magenta);
+                    font-size: 1.5rem;
+                    white-space: nowrap;
+                }
+            }
+
+            .translation
+            {
+                font-size: 1.5rem;
+                color: var(--green);
+            }
+
+            .notes
+            {
+                font-size: 1.25rem;
+                color: var(--yellow);
+            }
+
+            .toggle
+            {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                padding: var(--spacing-m);
+                border-top: var(--border);
+                cursor: pointer;
+            }
+
+            &.toggled
+            {
+                .toggle
+                {
+                    background-color: var(--background-dark);
+
+                    svg
+                    {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
+            &:not(.toggled)
+            {
+                .furigana, .translation, .notes
+                {
+                    display: none;
+                }
+            }
+        }
+    }
 }

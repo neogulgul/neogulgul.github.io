@@ -4,12 +4,6 @@
 	src: url("/fonts/NotoSansJP.ttf");
 }
 
-@font-face
-{
-	font-family: "Monospace";
-	src: url("/fonts/unifont-16.0.04.otf");
-}
-
 html.dark
 {
 	--background-light:  #3c3836;
@@ -29,15 +23,19 @@ html
 	--foreground:        #bdae93;
 	--foreground-strong: #a89984;
 
-	--red:    #ef2f27;
-	--green:  #519f50;
-	--yellow: #fbb829;
-	--blue:   #2c78bf;
+	--red:     #ef2f27;
+	--green:   #519f50;
+	--yellow:  #fbb829;
+	--blue:    #2c78bf;
+    --magenta: #b16286;
+    --cyan:    #689d6a;
 
-	--bright-red:    #f75341;
-	--bright-green:  #98bc37;
-	--bright-yellow: #fed06e;
-	--bright-blue:   #68a8e4;
+	--bright-red:     #f75341;
+	--bright-green:   #98bc37;
+	--bright-yellow:  #fed06e;
+	--bright-blue:    #68a8e4;
+    --bright-magenta: #d3869b;
+    --bright-cyan:    #8ec07c;
 
 	--spacing-xs:  2.5px;
 	--spacing-s:   5.0px;
@@ -135,16 +133,18 @@ body
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			gap: var(--spacing-s);
+			gap: var(--spacing-l);
+            width: 100%;
 		}
 	}
 }
 
-pre
+a, button
 {
-	width: 100%;
-	overflow-x: auto;
-	font-family: "Monospace";
+	display: flex;
+	justify-content: center;
+    align-items: center;
+    gap: var(--spacing-m);
 }
 
 a
@@ -160,8 +160,6 @@ a
 
 button
 {
-	display: flex;
-	justify-content: center;
 	padding: var(--spacing-m);
 	border: var(--border);
 	border-radius: var(--border-radius);
