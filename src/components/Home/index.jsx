@@ -4,7 +4,7 @@ export default MobxReact.observer(function(props)
 {
 	return <>
 		<div className="Home">
-			<h1>Hello, World!</h1>
+			<h1>猿も木から落ちる。</h1>
 		</div>
 	</>
 })

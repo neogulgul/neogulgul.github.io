@@ -1,5 +1,51 @@
 .Nihongo
 {
+    .circle
+    {
+        width:  1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background-color: var(--color);
+    }
+
+    .colorCodes
+    {
+        display: flex;
+        gap: inherit;
+
+        > div
+        {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-s);
+        }
+    }
+
+    .japanese, .furigana, .translation, .notes
+    {
+        color: var(--color);
+    }
+
+    .japanese
+    {
+        --color: var(--blue);
+    }
+
+    .furigana
+    {
+        --color: var(--magenta);
+    }
+
+    .translation
+    {
+        --color: var(--green);
+    }
+
+    .notes
+    {
+        --color: var(--yellow);
+    }
+
     .phrases
     {
         display: flex;
@@ -34,39 +80,39 @@
 
                     &.anchored
                     {
-                        background-color: var(--background-dark);
+                        color: var(--foreground);
                     }
                 }
             }
 
             .japanese
             {
-                position: relative;
-                font-size: 2rem;
-                color: var(--blue);
-
-                .furigana
+                span
                 {
-                    position: absolute;
-                    top:  50%;
-                    left: 50%;
-                    translate: -50% calc(-100% - var(--spacing-m));
-                    color: var(--magenta);
-                    font-size: 1.5rem;
-                    white-space: nowrap;
+                    position: relative;
+                    font-size: 2em;
+                    color: inherit;
+
+                    .furigana
+                    {
+                        position: absolute;
+                        top: calc(var(--spacing-l) * -1);
+                        left: 50%;
+                        translate: -50% 0;
+                        font-size: 1rem;
+                        white-space: nowrap;
+                    }
                 }
             }
 
             .translation
             {
                 font-size: 1.5rem;
-                color: var(--green);
             }
 
             .notes
             {
                 font-size: 1.25rem;
-                color: var(--yellow);
             }
 
             .toggle
@@ -83,8 +129,6 @@
             {
                 .toggle
                 {
-                    background-color: var(--background-dark);
-
                     svg
                     {
                         transform: rotate(180deg);
