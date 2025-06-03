@@ -13,7 +13,7 @@ uninstall:
 	rm -rf $(UNINSTALL_TARGETS)
 
 dev:
-	@npx vite
+	@VITE_DEBUG=true npx vite
 
 build:
 	@VITE_BUILD_DIR=$(BUILD_DIR) npx vite build

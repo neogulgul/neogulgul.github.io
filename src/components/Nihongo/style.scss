@@ -1,0 +1,13 @@
+.Nihongo
+{
+	width: 100%;
+
+	.textFileWrapper
+	{
+		display: flex;
+		width: 100%;
+		padding: var(--spacing-m);
+		border: var(--border);
+		background-color: var(--background-dark);
+	}
+}

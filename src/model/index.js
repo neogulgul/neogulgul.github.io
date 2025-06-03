@@ -7,40 +7,36 @@ class Model
 		Mobx.makeAutoObservable(this)
 
 		Mobx.reaction(
-			() => this.snapshot,
+			() => this.getSnapshot(),
 			() => this.save()
 		)
 	}
 
-	set snapshot(snapshot)
+	setSnapshot(snapshot)
 	{
-		this.value    = snapshot?.value    ?? 0
 		this.darkMode = snapshot?.darkMode ?? window.matchMedia("(prefers-color-scheme: dark)").matches
 	}
 
-	get snapshot()
+	getSnapshot()
 	{
-		return {
-			value:    this.value,
-			darkMode: this.darkMode
-		}
+		return { ...this }
 	}
 
 	save()
 	{
-		localStorage.setItem("model", JSON.stringify(this.snapshot))
+		localStorage.setItem("model", JSON.stringify(this.getSnapshot()))
 		logger.debug.log("Model snapshot saved.")
 	}
 
 	load()
 	{
-		this.snapshot = JSON.parse(localStorage.getItem("model"))
-		logger.debug.log("Model snapshot loaded:", this.snapshot)
+		this.setSnapshot(JSON.parse(localStorage.getItem("model")))
+		logger.debug.log("Model snapshot loaded:", this.getSnapshot())
 	}
 
 	reset()
 	{
-		this.snapshot = null
+		this.setSnapshot(null)
 	}
 }
 

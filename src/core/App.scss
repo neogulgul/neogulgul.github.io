@@ -1,7 +1,13 @@
 @font-face
 {
 	font-family: "Default";
-	src: url("/MartianMonoNerdFont-Regular.ttf");
+	src: url("/fonts/NotoSansJP.ttf");
+}
+
+@font-face
+{
+	font-family: "Monospace";
+	src: url("/fonts/unifont-16.0.04.otf");
 }
 
 html.dark
@@ -72,15 +78,48 @@ body
 	max-width: 100vw;
 	min-height: 100vh;
 
-	> nav
+	> header
 	{
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
 		gap: var(--spacing-l);
 		padding: var(--spacing-l);
 		border-bottom: var(--border);
 		width: 100%;
 		background-color: var(--background-light);
+
+		nav
+		{
+			display: flex;
+			gap: inherit;
+
+			.options
+			{
+				.DarkModeToggle
+				{
+					&:hover
+					{
+						svg
+						{
+							color: var(--foreground-strong)
+						}
+					}
+				}
+			}
+		}
+
+		.DarkModeToggle
+		{
+			cursor: pointer;
+
+			&:hover
+			{
+				svg
+				{
+					color: var(--foreground-strong);
+				}
+			}
+		}
 	}
 
 	> main
@@ -90,7 +129,22 @@ body
 		align-items: center;
 		width: 100%;
 		padding: var(--spacing-xl);
+
+		> div
+		{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: var(--spacing-s);
+		}
 	}
+}
+
+pre
+{
+	width: 100%;
+	overflow-x: auto;
+	font-family: "Monospace";
 }
 
 a
@@ -169,4 +223,16 @@ h5
 h6
 {
 	font-size: 1.33rem;
+}
+
+svg
+{
+	width:  1em;
+	height: 1em;
+	color: inherit;
+
+	path
+	{
+		color: inherit;
+	}
 }

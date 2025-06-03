@@ -1,4 +1,5 @@
-import Home from "/src/components/Home/Home.jsx"
+import Home from "/src/components/Home"
+import Nihongo from "/src/components/Nihongo"
 
 export const routes = []
 
@@ -12,3 +13,4 @@ function addRoute(path, element)
 
 addRoute("*", <h1>404 Not Found</h1>)
 addRoute("/", Home)
+addRoute("/nihongo", Nihongo)
